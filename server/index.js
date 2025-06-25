@@ -17,13 +17,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Optional additional cors() setup
-const corsOptions = {
-  origin: 'https://t4teq-task-assignment.netlify.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-};
-app.use(cors(corsOptions));
+// // ✅ Optional additional cors() setup
+// const corsOptions = {
+//   origin: 'https://t4teq-task-assignment.netlify.app',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   credentials: true
+// };
+// app.use(cors(corsOptions));
 app.use(express.json());
 
 // ✅ MongoDB connection
