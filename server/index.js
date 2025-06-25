@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-const router = express.Router();
-require('dotenv').config(); 
+// const router = express.Router();
+// require('dotenv').config(); 
 
 const app = express();
 
