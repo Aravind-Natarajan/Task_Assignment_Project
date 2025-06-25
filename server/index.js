@@ -2,29 +2,22 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const router = express.Router();
+require('dotenv').config(); 
 
 const app = express();
 
-// ✅ Manual CORS Middleware (Render + Netlify Fix)
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://t4teq-task-assignment.netlify.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
 
-// // ✅ Optional additional cors() setup
-// const corsOptions = {
-//   origin: 'https://t4teq-task-assignment.netlify.app',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   credentials: true
-// };
-// app.use(cors(corsOptions));
+// ✅ CORS setup
+app.use(cors({
+  origin: 'https://t4teq-task-assignment.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(express.json());
+app.use(cors()); // Be careful, this allows any domain
+
 
 // ✅ MongoDB connection
 mongoose.connect('mongodb+srv://aravind485528:aravind485528@cluster0.sp31750.mongodb.net/taskmanager?retryWrites=true&w=majority&appName=Cluster0', {
@@ -34,7 +27,7 @@ mongoose.connect('mongodb+srv://aravind485528:aravind485528@cluster0.sp31750.mon
   .then(() => console.log('MongoDB connected...'))
   .catch((err) => console.log('MongoDB error:', err));
 
-// ✅ Registration Schema & Model
+// ✅ Registration Schema
 const registerSchema = new mongoose.Schema({
   name: String,
   employeeId: String,
@@ -84,14 +77,14 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// ✅ Task Schema & Model
+// ✅ Task Schema
 const taskSchema = new mongoose.Schema({
   month: { type: String, required: true },
   givenDate: { type: String, required: true },
   completedDate: { type: String, required: true },
   workDescription: { type: String, required: true },
   assignedBy: { type: String, required: true },
-  status: { type: String, default: 'Not Complete' },
+  status: { type: String, default: 'Not Complete' },  // 🔥 NEW FIELD
   employeeId: { type: String, required: true }
 });
 const Task = mongoose.model('Task', taskSchema);
@@ -107,17 +100,26 @@ app.post('/api/tasks', async (req, res) => {
   }
 });
 
-// ✅ Get Tasks for employee
+// ✅ Get Tasks from employee
+
+
+
+//Admin GET /api/tasks
 app.get('/api/tasks', async (req, res) => {
   const { employeeId } = req.query;
+
   try {
-    if (!employeeId) return res.status(400).json({ message: 'employeeId is required' });
+    if (!employeeId) {
+      return res.status(400).json({ message: 'employeeId is required' });
+    }
     const tasks = await Task.find({ employeeId });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching tasks' });
   }
 });
+
+
 
 // ✅ Update Task
 app.put('/api/tasks/:id', async (req, res) => {
@@ -139,24 +141,25 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// ✅ Get all registers (Admin)
+// Admin panel work
+// getting data in branchwise
 app.get('/api/registers', async (req, res) => {
   try {
-    const users = await Register.find();
+    const users = await Register.find(); // or filter by branch here
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching users' });
   }
 });
 
-// ✅ Get single employee
+// GET by employeeId
 app.get('/api/register/:employeeId', async (req, res) => {
   const user = await Register.findOne({ employeeId: req.params.employeeId });
   if (!user) return res.status(404).send({ message: 'User not found' });
   res.send(user);
 });
 
-// ✅ Update employee profile
+// PUT by employeeId
 app.put('/api/register/:employeeId', async (req, res) => {
   const updated = await Register.findOneAndUpdate(
     { employeeId: req.params.employeeId },
@@ -167,7 +170,14 @@ app.put('/api/register/:employeeId', async (req, res) => {
   res.send({ message: 'Profile updated successfully' });
 });
 
-// ✅ Skill Schema & Model
+
+
+
+// **************************************
+// skill update session
+
+
+// Skill Schema
 const skillSchema = new mongoose.Schema({
   name: String,
   employeeId: String,
@@ -175,9 +185,10 @@ const skillSchema = new mongoose.Schema({
   emailId: String,
   skills: [String],
 });
+
 const Skill = mongoose.model('Skill', skillSchema);
 
-// ✅ Add Skill
+// Skill store in DB
 app.post('/api/skill', async (req, res) => {
   try {
     const newSkill = new Skill(req.body);
@@ -188,7 +199,7 @@ app.post('/api/skill', async (req, res) => {
   }
 });
 
-// ✅ Get skill by employeeId
+// get skill data using id 
 app.get('/api/skill/:employeeId', async (req, res) => {
   try {
     const data = await Skill.findOne({ employeeId: req.params.employeeId });
@@ -200,7 +211,6 @@ app.get('/api/skill/:employeeId', async (req, res) => {
   }
 });
 
-// ✅ Update skill
 app.put('/api/skill/:employeeId', async (req, res) => {
   const cleanedSkills = req.body.skills.map(s => s.trim().toLowerCase()).filter(s => s);
   try {
@@ -217,7 +227,6 @@ app.put('/api/skill/:employeeId', async (req, res) => {
   }
 });
 
-// ✅ Delete skill
 app.delete('/api/skill/:employeeId', async (req, res) => {
   try {
     const deleted = await Skill.findOneAndDelete({ employeeId: req.params.employeeId });
@@ -229,7 +238,7 @@ app.delete('/api/skill/:employeeId', async (req, res) => {
   }
 });
 
-// ✅ Get all skill data
+// GET - Retrieve all skill data
 app.get('/api/skill', async (req, res) => {
   try {
     const data = await Skill.find();
@@ -240,38 +249,56 @@ app.get('/api/skill', async (req, res) => {
   }
 });
 
-// ✅ Email API
+
 app.post('/api/send-email', async (req, res) => {
-  const { to, subject, text } = req.body;
-  if (!to || !subject || !text) {
-    return res.status(400).json({ message: 'Missing required fields' });
-  }
+    const { to, subject, text } = req.body;
 
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'anushasreeanu584@gmail.com',
-        pass: 'zghp oepg hooa fktj'
-      }
-    });
+    if ( !to || !subject || !text) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
 
-    const mailOptions = {
-      to,
-      subject,
-      text
-    };
+    try {
+        // Create transporter
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'anushasreeanu584@gmail.com', 
+                pass: 'zghp oepg hooa fktj'       
+            }
+        });
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Email sent successfully' });
-  } catch (error) {
-    console.error('Email send error:', error);
-    res.status(500).json({ message: 'Email failed to send', error });
-  }
+        const mailOptions = {
+            to: `${to}`,         // employee email
+            subject: subject,
+            text: text
+        };
+
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'Email sent successfully' });
+    } catch (error) {
+        console.error('Email send error:', error);
+        res.status(500).json({ message: 'Email failed to send', error });
+    }
 });
 
-// ✅ Start Server for Render (Dynamic port)
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
