@@ -8,15 +8,25 @@ require('dotenv').config();
 const app = express();
 
 
-// ✅ CORS setup
-app.use(cors({
-  origin: 'https://t4teq-task-assignment.netlify.app/',
+// // ✅ CORS setup
+// app.use(cors({
+//   origin: 'https://t4teq-task-assignment.netlify.app/',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   credentials: true
+// }));
+
+const corsOptions = {
+  origin: 'https://t4teq-task-assignment.netlify.app', // ✅ No trailing slash
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ✅ Handle preflight
+
 
 app.use(express.json());
-app.use(cors()); // Be careful, this allows any domain
+
 
 // ✅ MongoDB connection
 mongoose.connect('mongodb+srv://aravind485528:aravind485528@cluster0.sp31750.mongodb.net/taskmanager?retryWrites=true&w=majority&appName=Cluster0', {
