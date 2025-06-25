@@ -16,6 +16,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(cors()); // Be careful, this allows any domain
 
 // ✅ MongoDB connection
 mongoose.connect('mongodb+srv://aravind485528:aravind485528@cluster0.sp31750.mongodb.net/taskmanager?retryWrites=true&w=majority&appName=Cluster0', {
