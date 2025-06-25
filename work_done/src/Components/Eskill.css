@@ -1,0 +1,119 @@
+/* Eskill.css */
+
+.eskill-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.back-button {
+  background: transparent;
+  color: #143D60;
+  font-size: 16px;
+  border: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-title {
+  text-align: center;
+  color: #143D60;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.retrieve-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.retrieve-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.retrieve-button {
+  padding: 10px 18px;
+  background-color: #143D60;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.retrieve-button:hover {
+  background-color: #0f2f4d;
+}
+
+.eskill-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.skill-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.plus-button {
+  background-color: #EB5B00;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus-button:hover {
+  background-color: #d24e00;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #143D60;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #0f2f4d;
+}
+
+.delete-button {
+  background-color: #cc0000;
+  margin-top: 10px;
+}
+
+.delete-button:hover {
+  background-color: #a80000;
+}

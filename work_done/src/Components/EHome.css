@@ -1,0 +1,99 @@
+/* DHome.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f7fa;
+  color: #143D60;
+}
+
+.course-card {
+  background: linear-gradient(135deg, #EB5B00, #FF8C00);
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.course-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.course-card:nth-child(4n+1) {
+  background: linear-gradient(135deg, #143D60, #005f99);
+}
+
+.course-card:nth-child(4n+2) {
+  background: linear-gradient(135deg, #0f2f4d, #27496d);
+}
+
+.course-card:nth-child(4n+3) {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+}
+
+.course-card:nth-child(4n+4) {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.course-title {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.animate-icon {
+  width: 60px;
+  height: 60px;
+  transition: transform 0.3s ease-in-out;
+  object-fit: contain;
+}
+
+.course-card:hover .animate-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* Navbar */
+.nav-section {
+  background-color: #0f2f4d;
+  padding: 1rem 2rem;
+}
+
+.brand-text {
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.navbar .btn {
+  background-color: #EB5B00;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.navbar .btn:hover {
+  background-color: #143D60;
+  color: #ffffff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .course-title {
+    font-size: 0.9rem;
+  }
+
+  .animate-icon {
+    width: 50px;
+    height: 50px;
+  }
+}

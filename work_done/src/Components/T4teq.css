@@ -1,0 +1,57 @@
+.logo-img {
+  width: 40px;
+}
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.highlight {
+  color: #EB5B00;
+}
+
+.btn-signup {
+  background-color: #EB5B00;
+  color: white;
+  border: none;
+}
+
+.btn-signup:hover {
+  background-color: #c44f00;
+  color: white;
+}
+
+.btn-profile {
+  background-color: #ffd34d;
+  color: #143D60;
+  border: none;
+}
+
+.btn-profile:hover {
+  background-color: #ffc107;
+  color: #143D60;
+}
+
+.task-box {
+  background-color: #fff;
+  color: #143D60;
+  border: 2px solid #EB5B00;
+  border-radius: 16px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.task-box:hover {
+  background-color: #0f2f4d;
+  color: #fff;
+  transform: translateY(-8px) scale(1.03);
+}
